@@ -1,0 +1,14 @@
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\bin\Debug\net8.0\ConsoleReview.exe
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\bin\Debug\net8.0\ConsoleReview.deps.json
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\bin\Debug\net8.0\ConsoleReview.runtimeconfig.json
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\bin\Debug\net8.0\ConsoleReview.dll
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\bin\Debug\net8.0\ConsoleReview.pdb
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.AssemblyInfoInputs.cache
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.AssemblyInfo.cs
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.dll
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\refint\ConsoleReview.dll
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.pdb
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ConsoleReview.genruntimeconfig.cache
+C:\Users\admin\Desktop\ConsoleReview\ConsoleReview\obj\Debug\net8.0\ref\ConsoleReview.dll
