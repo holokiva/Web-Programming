@@ -24,6 +24,12 @@ export default function LocationsPage() {
   const [error, setError] = useState('')
   const [name, setName] = useState('')
   const [city, setCity] = useState('')
+  const [address, setAddress] = useState('')
+  const [description, setDescription] = useState('')
+  const [rating, setRating] = useState('4.5')
+  const [hasFreeParking, setHasFreeParking] = useState(false)
+  const [hasWellnessCenter, setHasWellnessCenter] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
   const [editingId, setEditingId] = useState(null)
   const [saving, setSaving] = useState(false)
 
@@ -52,6 +58,12 @@ export default function LocationsPage() {
   const resetForm = () => {
     setName('')
     setCity('')
+    setAddress('')
+    setDescription('')
+    setRating('4.5')
+    setHasFreeParking(false)
+    setHasWellnessCenter(false)
+    setImageUrl('')
     setEditingId(null)
   }
 
@@ -59,14 +71,26 @@ export default function LocationsPage() {
     e.preventDefault()
     const trimmedName = name.trim()
     const trimmedCity = city.trim()
-    if (!trimmedName) {
-      setError('Name is required')
+    const trimmedAddress = address.trim()
+    const trimmedDescription = description.trim()
+    const numericRating = Number(rating)
+    if (!trimmedName || !trimmedCity || !trimmedAddress || !trimmedDescription || Number.isNaN(numericRating)) {
+      setError('Name, city, address, description and rating are required')
       return
     }
     setError('')
     setSaving(true)
     try {
-      const body = { name: trimmedName, city: trimmedCity }
+      const body = {
+        name: trimmedName,
+        city: trimmedCity,
+        address: trimmedAddress,
+        description: trimmedDescription,
+        rating: numericRating,
+        hasFreeParking,
+        hasWellnessCenter,
+        imageUrl: imageUrl.trim(),
+      }
       if (editingId != null) {
         await updateLocation(editingId, body)
       } else {
@@ -93,6 +117,12 @@ export default function LocationsPage() {
     setEditingId(id)
     setName(String(loc.name ?? loc.title ?? ''))
     setCity(String(loc.city ?? ''))
+    setAddress(String(loc.address ?? ''))
+    setDescription(String(loc.description ?? ''))
+    setRating(String(loc.rating ?? '4.5'))
+    setHasFreeParking(Boolean(loc.hasFreeParking))
+    setHasWellnessCenter(Boolean(loc.hasWellnessCenter))
+    setImageUrl(String(loc.imageUrl ?? ''))
     setError('')
   }
 
@@ -142,6 +172,50 @@ export default function LocationsPage() {
             <span>City</span>
             <input value={city} onChange={(e) => setCity(e.target.value)} disabled={saving} />
           </label>
+          <label className="field">
+            <span>Address</span>
+            <input value={address} onChange={(e) => setAddress(e.target.value)} disabled={saving} />
+          </label>
+          <label className="field">
+            <span>Rating</span>
+            <input
+              type="number"
+              min="1"
+              max="5"
+              step="0.1"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              disabled={saving}
+            />
+          </label>
+          <label className="field">
+            <span>Image URL</span>
+            <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} disabled={saving} />
+          </label>
+        </div>
+        <label className="field">
+          <span>Description</span>
+          <input value={description} onChange={(e) => setDescription(e.target.value)} disabled={saving} />
+        </label>
+        <div className="search-grid">
+          <label className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={hasFreeParking}
+              onChange={(e) => setHasFreeParking(e.target.checked)}
+              disabled={saving}
+            />
+            <span>Has free parking</span>
+          </label>
+          <label className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={hasWellnessCenter}
+              onChange={(e) => setHasWellnessCenter(e.target.checked)}
+              disabled={saving}
+            />
+            <span>Has wellness center</span>
+          </label>
         </div>
         <div className="form-actions">
           <button className="btn" type="submit" disabled={saving}>
@@ -167,6 +241,7 @@ export default function LocationsPage() {
                 <th>ID</th>
                 <th>Name</th>
                 <th>City</th>
+                <th>Rating</th>
                 <th />
               </tr>
             </thead>
@@ -178,6 +253,7 @@ export default function LocationsPage() {
                     <td>{id ?? '—'}</td>
                     <td>{loc.name ?? loc.title ?? '—'}</td>
                     <td>{loc.city ?? '—'}</td>
+                    <td>{loc.rating ?? '—'}</td>
                     <td>
                       <button
                         type="button"

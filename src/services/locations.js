@@ -1,7 +1,11 @@
 import { api } from './api'
 
-/** При необходимости замени префикс на `/api/admin/locations`, если так на бэкенде. */
-const BASE = '/api/locations'
+const BASE = '/api/admin/locations'
+
+export async function fetchPublicLocations(params) {
+  const { data } = await api.get('/api/locations', { params })
+  return data
+}
 
 export async function fetchLocations() {
   const { data } = await api.get(BASE)

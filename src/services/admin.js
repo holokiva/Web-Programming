@@ -5,6 +5,11 @@ export async function fetchAdminDashboard() {
   return data
 }
 
+export async function generateDemoUsersAndReservations() {
+  const { data } = await api.post('/debug/demo-users-and-reservations')
+  return data
+}
+
 /** Список всех бронирований для админки */
 export async function fetchAdminReservations() {
   const { data } = await api.get('/api/admin/reservations')

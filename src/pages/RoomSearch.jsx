@@ -97,14 +97,14 @@ export default function RoomSearch() {
     const params = {
       checkIn,
       checkOut,
-      guestCount: Number(guestCount),
+      guests: Number(guestCount),
     }
     const trimmed = city.trim()
     if (trimmed) params.city = trimmed
     const mr = minRating === '' ? NaN : Number(minRating)
-    if (!Number.isNaN(mr) && mr > 0) params.minRating = mr
-    if (onlyParking) params.hasParking = true
-    if (onlyWellness) params.hasWellness = true
+    if (!Number.isNaN(mr) && mr > 0) params.rating = mr
+    if (onlyParking) params.freeParking = true
+    if (onlyWellness) params.wellnessCenter = true
     return params
   }
 
@@ -145,7 +145,7 @@ export default function RoomSearch() {
         roomId: id,
         checkIn,
         checkOut,
-        guestCount: Number(guestCount),
+        guests: Number(guestCount),
       })
       setNotice('Reservation created. See “My reservations”.')
     } catch (err) {

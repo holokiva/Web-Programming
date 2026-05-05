@@ -14,6 +14,7 @@ export default function Register() {
   const navigate = useNavigate()
   const { login } = useAuth()
 
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
@@ -24,6 +25,7 @@ export default function Register() {
 
   const validate = () => {
     const next = {}
+    if (!name.trim()) next.name = 'Name is required'
     if (!email.trim()) next.email = 'Email is required'
     else if (!emailRe.test(email.trim())) next.email = 'Invalid email'
     if (!password) next.password = 'Password is required'
@@ -42,6 +44,7 @@ export default function Register() {
     setLoading(true)
     try {
       const data = await postRegister({
+        name: name.trim(),
         email: email.trim(),
         password,
       })
@@ -76,6 +79,19 @@ export default function Register() {
             <Link to="/login">Go to sign in</Link>
           </p>
         ) : null}
+
+        <label className="field">
+          <span>Name</span>
+          <input
+            type="text"
+            name="name"
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={loading}
+          />
+          {fieldErrors.name ? <small className="field-error">{fieldErrors.name}</small> : null}
+        </label>
 
         <label className="field">
           <span>Email</span>
