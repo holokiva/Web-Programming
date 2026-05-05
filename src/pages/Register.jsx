@@ -66,12 +66,12 @@ export default function Register() {
 
       <form className="form" onSubmit={onSubmit} noValidate>
         {apiError ? (
-          <p className="form-error" role="alert">
+          <p className="alert alert-error" role="alert">
             {apiError}
           </p>
         ) : null}
         {info ? (
-          <p className="form-info" role="status">
+          <p className="alert alert-success" role="status">
             {info}{' '}
             <Link to="/login">Перейти ко входу</Link>
           </p>

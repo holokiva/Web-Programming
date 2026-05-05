@@ -22,20 +22,4 @@ export function pickUserFromAuthResponse(data) {
   return null
 }
 
-export function getApiErrorMessage(error) {
-  const res = error?.response
-  if (!res) return error?.message || 'Нет соединения с сервером'
-
-  const d = res.data
-  if (typeof d === 'string' && d.trim()) return d
-  if (d && typeof d === 'object') {
-    if (typeof d.message === 'string' && d.message.trim()) return d.message
-    if (typeof d.title === 'string' && d.title.trim()) return d.title
-    if (d.errors && typeof d.errors === 'object') {
-      const first = Object.values(d.errors).flat().find(Boolean)
-      if (typeof first === 'string') return first
-    }
-  }
-
-  return `Ошибка ${res.status}`
-}
+export { getApiErrorMessage } from '../utils/apiError.js'

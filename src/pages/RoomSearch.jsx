@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import Loading from '../components/Loading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getApiErrorMessage } from '../services/auth.js'
 import { createReservation } from '../services/reservations.js'
@@ -160,12 +161,12 @@ export default function RoomSearch() {
 
       <form className="search-form" onSubmit={onSearch}>
         {error ? (
-          <p className="form-error" role="alert">
+          <p className="alert alert-error" role="alert">
             {error}
           </p>
         ) : null}
         {notice ? (
-          <p className="form-info" role="status">
+          <p className="alert alert-success" role="status">
             {notice}
           </p>
         ) : null}
@@ -243,6 +244,8 @@ export default function RoomSearch() {
           {loading ? 'Поиск…' : 'Найти'}
         </button>
       </form>
+
+      {loading ? <Loading label="Ищем доступные номера…" /> : null}
 
       {searched ? (
         <div className="results-block">

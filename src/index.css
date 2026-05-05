@@ -1,9 +1,21 @@
 :root {
+  --color-text: #1a1a1a;
+  --color-muted: #5c5c5c;
+  --color-bg: #f6f4f1;
+  --color-surface: #ffffff;
+  --color-border: #d9d5cf;
+  --color-primary: #0d47a1;
+  --color-danger-bg: #fdecea;
+  --color-danger-text: #611a15;
+  --color-danger-border: #f5c6cb;
+  --color-success-bg: #e8f5e9;
+  --color-success-text: #1b5e20;
+  --color-success-border: #a5d6a7;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #1a1a1a;
-  background-color: #f6f4f1;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

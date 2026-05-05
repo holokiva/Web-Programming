@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Loading from '../../components/Loading.jsx'
 import { getApiErrorMessage } from '../../services/auth.js'
 import { fetchAdminReservations, normalizeListPayload } from '../../services/admin.js'
 
@@ -37,13 +38,13 @@ export default function ReservationsListPage() {
       <p className="muted">GET /api/admin/reservations</p>
 
       {error ? (
-        <p className="form-error" role="alert">
+        <p className="alert alert-error" role="alert">
           {error}
         </p>
       ) : null}
 
       {loading ? (
-        <p className="muted">Загрузка…</p>
+        <Loading label="Загрузка списка…" />
       ) : items.length === 0 ? (
         <p className="muted">Список пуст.</p>
       ) : (

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import { getApiErrorMessage, pickTokenFromAuthResponse, pickUserFromAuthResponse, postLogin } from '../services/auth.js'
 
@@ -8,6 +8,7 @@ const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [searchParams] = useSearchParams()
   const { login } = useAuth()
   const from = location.state?.from?.pathname || '/'
 
@@ -16,6 +17,12 @@ export default function Login() {
   const [fieldErrors, setFieldErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get('reason') === 'session') {
+      setApiError('Сессия истекла. Войдите снова.')
+    }
+  }, [searchParams])
 
   const validate = () => {
     const next = {}
@@ -58,7 +65,7 @@ export default function Login() {
 
       <form className="form" onSubmit={onSubmit} noValidate>
         {apiError ? (
-          <p className="form-error" role="alert">
+          <p className="alert alert-error" role="alert">
             {apiError}
           </p>
         ) : null}

@@ -5,8 +5,9 @@
 }
 
 .header {
-  border-bottom: 1px solid #d9d5cf;
-  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .nav {
@@ -86,34 +87,62 @@
   border: 1px solid #cfc8bf;
   border-radius: 6px;
   font: inherit;
+  background: var(--color-surface);
+}
+
+.field input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.field input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .field-error {
   color: #b00020;
 }
 
-.form-error {
-  margin: 0;
-  padding: 0.6rem 0.75rem;
-  border-radius: 6px;
-  background: #fdecea;
-  color: #611a15;
+.alert {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
   text-align: left;
   font-size: 0.95rem;
+  border: 1px solid transparent;
+}
+
+.alert-error,
+.form-error {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  border-color: var(--color-danger-border);
+}
+
+.alert-success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-color: var(--color-success-border);
+}
+
+.alert-success a {
+  color: var(--color-primary);
 }
 
 .form-info {
-  margin: 0;
-  padding: 0.6rem 0.75rem;
-  border-radius: 6px;
-  background: #e8f5e9;
-  color: #1b5e20;
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-border);
   text-align: left;
   font-size: 0.95rem;
 }
 
 .form-info a {
-  color: #0d47a1;
+  color: var(--color-primary);
 }
 
 .btn {
@@ -147,7 +176,7 @@
 }
 
 .muted {
-  color: #666;
+  color: var(--color-muted);
 }
 
 .search-form {
@@ -220,8 +249,36 @@
 }
 
 .inline-link {
-  color: #0d47a1;
+  color: var(--color-primary);
   text-decoration: underline;
+}
+
+.loading-block {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.loading-label {
+  vertical-align: middle;
+}
+
+.spinner {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 2px solid #cfc8bf;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .admin-layout {

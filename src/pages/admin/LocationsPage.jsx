@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Loading from '../../components/Loading.jsx'
 import { getApiErrorMessage } from '../../services/auth.js'
 import {
   createLocation,
@@ -102,7 +103,7 @@ export default function LocationsPage() {
       <p className="muted">CRUD: /api/locations (при необходимости поменяй путь в services/locations.js)</p>
 
       {error ? (
-        <p className="form-error" role="alert">
+        <p className="alert alert-error" role="alert">
           {error}
         </p>
       ) : null}
@@ -132,7 +133,7 @@ export default function LocationsPage() {
       </form>
 
       {loading ? (
-        <p className="muted">Загрузка…</p>
+        <Loading label="Загрузка локаций…" />
       ) : rows.length === 0 ? (
         <p className="muted">Нет локаций.</p>
       ) : (

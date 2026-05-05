@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Loading from '../../components/Loading.jsx'
 import { getApiErrorMessage } from '../../services/auth.js'
 import { fetchAdminDashboard } from '../../services/admin.js'
 
@@ -38,13 +39,13 @@ export default function DashboardPage() {
       <p className="muted">Данные с GET /api/admin/dashboard</p>
 
       {error ? (
-        <p className="form-error" role="alert">
+        <p className="alert alert-error" role="alert">
           {error}
         </p>
       ) : null}
 
       {loading ? (
-        <p className="muted">Загрузка…</p>
+        <Loading label="Загрузка дашборда…" />
       ) : data != null && typeof data === 'object' && !Array.isArray(data) ? (
         Object.keys(data).length === 0 ? (
           <p className="muted">Пустой объект в ответе.</p>

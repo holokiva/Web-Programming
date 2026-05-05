@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Loading from '../components/Loading.jsx'
 import { getApiErrorMessage } from '../services/auth.js'
 import {
   deleteReservation,
@@ -60,13 +61,13 @@ export default function MyReservations() {
       <h1>Мои брони</h1>
 
       {error ? (
-        <p className="form-error" role="alert">
+        <p className="alert alert-error" role="alert">
           {error}
         </p>
       ) : null}
 
       {loading ? (
-        <p className="muted">Загрузка…</p>
+        <Loading label="Загрузка бронирований…" />
       ) : items.length === 0 ? (
         <p className="muted">Пока нет бронирований.</p>
       ) : (
