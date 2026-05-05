@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Loading from '../components/Loading.jsx'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../hooks/useAuth.js'
 import { getApiErrorMessage } from '../services/auth.js'
 import { createReservation } from '../services/reservations.js'
 import { fetchRoomAvailability, normalizeRoomsPayload } from '../services/rooms.js'

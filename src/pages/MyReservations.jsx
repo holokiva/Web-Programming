@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loading from '../components/Loading.jsx'
 import { getApiErrorMessage } from '../services/auth.js'
 import {
@@ -17,29 +17,38 @@ function reservationKey(r, idx) {
   return r.id ?? r.reservationId ?? idx
 }
 
+async function loadReservationRows() {
+  const raw = await fetchMyReservations()
+  return normalizeReservationsPayload(raw)
+}
+
 export default function MyReservations() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [deletingId, setDeletingId] = useState(null)
 
-  const load = useCallback(async () => {
-    setError('')
-    setLoading(true)
-    try {
-      const raw = await fetchMyReservations()
-      setItems(normalizeReservationsPayload(raw))
-    } catch (err) {
-      setError(getApiErrorMessage(err))
-      setItems([])
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      setError('')
+      setLoading(true)
+      try {
+        const rows = await loadReservationRows()
+        if (!cancelled) setItems(rows)
+      } catch (err) {
+        if (!cancelled) {
+          setError(getApiErrorMessage(err))
+          setItems([])
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
     }
   }, [])
-
-  useEffect(() => {
-    load()
-  }, [load])
 
   const onDelete = async (id) => {
     if (id == null) return
@@ -48,7 +57,15 @@ export default function MyReservations() {
     setError('')
     try {
       await deleteReservation(id)
-      await load()
+      setLoading(true)
+      try {
+        const rows = await loadReservationRows()
+        setItems(rows)
+      } catch (err) {
+        setError(getApiErrorMessage(err))
+      } finally {
+        setLoading(false)
+      }
     } catch (err) {
       setError(getApiErrorMessage(err))
     } finally {

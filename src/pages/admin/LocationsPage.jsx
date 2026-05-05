@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loading from '../../components/Loading.jsx'
 import { getApiErrorMessage } from '../../services/auth.js'
 import {
@@ -13,6 +13,11 @@ function locationId(loc) {
   return loc.id ?? loc.locationId
 }
 
+async function loadLocationRows() {
+  const raw = await fetchLocations()
+  return normalizeLocationsPayload(raw)
+}
+
 export default function LocationsPage() {
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
@@ -22,23 +27,27 @@ export default function LocationsPage() {
   const [editingId, setEditingId] = useState(null)
   const [saving, setSaving] = useState(false)
 
-  const load = useCallback(async () => {
-    setError('')
-    setLoading(true)
-    try {
-      const raw = await fetchLocations()
-      setRows(normalizeLocationsPayload(raw))
-    } catch (e) {
-      setError(getApiErrorMessage(e))
-      setRows([])
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      setError('')
+      setLoading(true)
+      try {
+        const next = await loadLocationRows()
+        if (!cancelled) setRows(next)
+      } catch (e) {
+        if (!cancelled) {
+          setError(getApiErrorMessage(e))
+          setRows([])
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
     }
   }, [])
-
-  useEffect(() => {
-    load()
-  }, [load])
 
   const resetForm = () => {
     setName('')
@@ -64,7 +73,14 @@ export default function LocationsPage() {
         await createLocation(body)
       }
       resetForm()
-      await load()
+      setLoading(true)
+      try {
+        setRows(await loadLocationRows())
+      } catch (err) {
+        setError(getApiErrorMessage(err))
+      } finally {
+        setLoading(false)
+      }
     } catch (err) {
       setError(getApiErrorMessage(err))
     } finally {
@@ -89,7 +105,14 @@ export default function LocationsPage() {
     try {
       await deleteLocation(id)
       if (editingId === id) resetForm()
-      await load()
+      setLoading(true)
+      try {
+        setRows(await loadLocationRows())
+      } catch (err) {
+        setError(getApiErrorMessage(err))
+      } finally {
+        setLoading(false)
+      }
     } catch (err) {
       setError(getApiErrorMessage(err))
     } finally {

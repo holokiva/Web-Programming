@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useAuth } from '../hooks/useAuth.js'
 import { getApiErrorMessage, pickTokenFromAuthResponse, pickUserFromAuthResponse, postLogin } from '../services/auth.js'
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -15,14 +15,10 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
-  const [apiError, setApiError] = useState('')
+  const [apiError, setApiError] = useState(() =>
+    searchParams.get('reason') === 'session' ? 'Сессия истекла. Войдите снова.' : '',
+  )
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    if (searchParams.get('reason') === 'session') {
-      setApiError('Сессия истекла. Войдите снова.')
-    }
-  }, [searchParams])
 
   const validate = () => {
     const next = {}

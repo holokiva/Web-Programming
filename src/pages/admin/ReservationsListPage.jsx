@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Loading from '../../components/Loading.jsx'
 import { getApiErrorMessage } from '../../services/auth.js'
 import { fetchAdminReservations, normalizeListPayload } from '../../services/admin.js'
@@ -9,28 +9,37 @@ function formatDate(v) {
   return s.length >= 10 ? s.slice(0, 10) : s
 }
 
+async function loadAdminReservationRows() {
+  const raw = await fetchAdminReservations()
+  return normalizeListPayload(raw)
+}
+
 export default function ReservationsListPage() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const load = useCallback(async () => {
-    setError('')
-    setLoading(true)
-    try {
-      const raw = await fetchAdminReservations()
-      setItems(normalizeListPayload(raw))
-    } catch (e) {
-      setError(getApiErrorMessage(e))
-      setItems([])
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      setError('')
+      setLoading(true)
+      try {
+        const rows = await loadAdminReservationRows()
+        if (!cancelled) setItems(rows)
+      } catch (e) {
+        if (!cancelled) {
+          setError(getApiErrorMessage(e))
+          setItems([])
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
     }
   }, [])
-
-  useEffect(() => {
-    load()
-  }, [load])
 
   return (
     <section className="page-wide">

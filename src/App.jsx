@@ -1,6 +1,6 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import { useAuth } from './context/AuthContext.jsx'
+import { useAuth } from './hooks/useAuth.js'
 import About from './pages/About.jsx'
 import Account from './pages/Account.jsx'
 import AdminLayout from './components/AdminLayout.jsx'
