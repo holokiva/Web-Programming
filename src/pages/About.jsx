@@ -1,8 +1,8 @@
 export default function About() {
   return (
     <section>
-      <h1>О нас</h1>
-      <p>Paradise Hotel — учебный проект системы бронирования.</p>
+      <h1>About</h1>
+      <p>Paradise Hotel is a university project for a hotel booking system.</p>
     </section>
   )
 }

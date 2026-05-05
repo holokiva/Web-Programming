@@ -52,7 +52,7 @@ export default function MyReservations() {
 
   const onDelete = async (id) => {
     if (id == null) return
-    if (!window.confirm('Отменить это бронирование?')) return
+    if (!window.confirm('Cancel this reservation?')) return
     setDeletingId(id)
     setError('')
     try {
@@ -75,7 +75,7 @@ export default function MyReservations() {
 
   return (
     <section className="page-wide">
-      <h1>Мои брони</h1>
+      <h1>My reservations</h1>
 
       {error ? (
         <p className="alert alert-error" role="alert">
@@ -84,20 +84,20 @@ export default function MyReservations() {
       ) : null}
 
       {loading ? (
-        <Loading label="Загрузка бронирований…" />
+        <Loading label="Loading reservations…" />
       ) : items.length === 0 ? (
-        <p className="muted">Пока нет бронирований.</p>
+        <p className="muted">No reservations yet.</p>
       ) : (
         <div className="table-wrap">
           <table className="data-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Номер</th>
-                <th>Заезд</th>
-                <th>Выезд</th>
-                <th>Гостей</th>
-                <th>Статус</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Guests</th>
+                <th>Status</th>
                 <th />
               </tr>
             </thead>
@@ -125,7 +125,7 @@ export default function MyReservations() {
                           disabled={deletingId != null}
                           onClick={() => onDelete(id)}
                         >
-                          {deletingId === id ? '…' : 'Отменить'}
+                          {deletingId === id ? '…' : 'Cancel'}
                         </button>
                       ) : (
                         '—'

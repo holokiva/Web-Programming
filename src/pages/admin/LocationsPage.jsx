@@ -60,7 +60,7 @@ export default function LocationsPage() {
     const trimmedName = name.trim()
     const trimmedCity = city.trim()
     if (!trimmedName) {
-      setError('Укажите название')
+      setError('Name is required')
       return
     }
     setError('')
@@ -99,7 +99,7 @@ export default function LocationsPage() {
   const onDelete = async (loc) => {
     const id = locationId(loc)
     if (id == null) return
-    if (!window.confirm('Удалить эту локацию?')) return
+    if (!window.confirm('Delete this location?')) return
     setError('')
     setSaving(true)
     try {
@@ -122,8 +122,8 @@ export default function LocationsPage() {
 
   return (
     <section className="page-wide">
-      <h1>Локации</h1>
-      <p className="muted">CRUD: /api/locations (при необходимости поменяй путь в services/locations.js)</p>
+      <h1>Locations</h1>
+      <p className="muted">CRUD: /api/locations (change BASE in src/services/locations.js if needed)</p>
 
       {error ? (
         <p className="alert alert-error" role="alert">
@@ -132,41 +132,41 @@ export default function LocationsPage() {
       ) : null}
 
       <form className="locations-form" onSubmit={onSubmit}>
-        <h2 className="form-section-title">{editingId != null ? 'Редактирование' : 'Новая локация'}</h2>
+        <h2 className="form-section-title">{editingId != null ? 'Edit' : 'New location'}</h2>
         <div className="search-grid">
           <label className="field">
-            <span>Название</span>
+            <span>Name</span>
             <input value={name} onChange={(e) => setName(e.target.value)} disabled={saving} required />
           </label>
           <label className="field">
-            <span>Город</span>
+            <span>City</span>
             <input value={city} onChange={(e) => setCity(e.target.value)} disabled={saving} />
           </label>
         </div>
         <div className="form-actions">
           <button className="btn" type="submit" disabled={saving}>
-            {saving ? 'Сохранение…' : editingId != null ? 'Сохранить' : 'Добавить'}
+            {saving ? 'Saving…' : editingId != null ? 'Save' : 'Add'}
           </button>
           {editingId != null ? (
             <button type="button" className="btn btn-secondary" onClick={resetForm} disabled={saving}>
-              Отмена
+              Cancel
             </button>
           ) : null}
         </div>
       </form>
 
       {loading ? (
-        <Loading label="Загрузка локаций…" />
+        <Loading label="Loading locations…" />
       ) : rows.length === 0 ? (
-        <p className="muted">Нет локаций.</p>
+        <p className="muted">No locations.</p>
       ) : (
         <div className="table-wrap">
           <table className="data-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Название</th>
-                <th>Город</th>
+                <th>Name</th>
+                <th>City</th>
                 <th />
               </tr>
             </thead>
@@ -185,7 +185,7 @@ export default function LocationsPage() {
                         onClick={() => startEdit(loc)}
                         disabled={saving}
                       >
-                        Изменить
+                        Edit
                       </button>{' '}
                       <button
                         type="button"
@@ -193,7 +193,7 @@ export default function LocationsPage() {
                         onClick={() => onDelete(loc)}
                         disabled={saving || id == null}
                       >
-                        Удалить
+                        Delete
                       </button>
                     </td>
                   </tr>

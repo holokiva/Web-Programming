@@ -13,15 +13,15 @@ function messageFromResponseData(data) {
 }
 
 const STATUS_FALLBACK = {
-  400: 'Некорректный запрос',
-  401: 'Нужно войти в систему',
-  403: 'Доступ запрещён',
-  404: 'Ресурс не найден',
-  408: 'Превышено время ожидания',
-  429: 'Слишком много запросов',
-  500: 'Ошибка сервера',
-  502: 'Сервер недоступен',
-  503: 'Сервис временно недоступен',
+  400: 'Bad request',
+  401: 'Please sign in',
+  403: 'Access forbidden',
+  404: 'Not found',
+  408: 'Request timeout',
+  429: 'Too many requests',
+  500: 'Server error',
+  502: 'Server unavailable',
+  503: 'Service unavailable',
 }
 
 /**
@@ -29,9 +29,11 @@ const STATUS_FALLBACK = {
  */
 export function getApiErrorMessage(error) {
   if (!error?.response) {
-    if (error?.code === 'ECONNABORTED') return 'Превышено время ожидания'
-    if (error?.message === 'Network Error') return 'Нет соединения с сервером'
-    return error?.message || 'Нет соединения с сервером'
+    if (error?.code === 'ECONNABORTED') return 'Request timeout'
+    if (error?.message === 'Network Error') {
+      return 'Cannot reach server. Check that backend is running and VITE_API_URL is correct.'
+    }
+    return error?.message || 'Cannot reach server'
   }
 
   const { status, data } = error.response
@@ -43,5 +45,5 @@ export function getApiErrorMessage(error) {
   if (status === 404) return fromBody || STATUS_FALLBACK[404]
 
   if (fromBody) return fromBody
-  return STATUS_FALLBACK[status] || `Ошибка ${status}`
+  return STATUS_FALLBACK[status] || `Error ${status}`
 }

@@ -20,7 +20,7 @@ function addDays(base, days) {
 }
 
 function roomLabel(room) {
-  return room.name ?? room.title ?? room.roomNumber ?? `Номер #${room.id ?? '—'}`
+  return room.name ?? room.title ?? room.roomNumber ?? `Room #${room.id ?? '—'}`
 }
 
 function pickCity(room) {
@@ -35,20 +35,20 @@ function pickRating(room) {
 
 function pickParking(room) {
   const v = room.hasParking ?? room.parking ?? room.isParkingAvailable
-  if (typeof v === 'boolean') return v ? 'Да' : 'Нет'
+  if (typeof v === 'boolean') return v ? 'Yes' : 'No'
   return '—'
 }
 
 function pickWellness(room) {
   const v = room.hasWellness ?? room.wellness ?? room.isWellnessAvailable
-  if (typeof v === 'boolean') return v ? 'Да' : 'Нет'
+  if (typeof v === 'boolean') return v ? 'Yes' : 'No'
   return '—'
 }
 
 function pickPrice(room) {
   const p = room.pricePerNight ?? room.price ?? room.nightPrice
   if (p == null || Number.isNaN(Number(p))) return '—'
-  return `${new Intl.NumberFormat('ru-RU').format(Number(p))} ₽`
+  return `$${new Intl.NumberFormat('en-US').format(Number(p))}`
 }
 
 export default function RoomSearch() {
@@ -82,13 +82,13 @@ export default function RoomSearch() {
 
   const validateSearch = () => {
     const next = {}
-    if (!checkIn) next.checkIn = 'Укажите дату заезда'
-    if (!checkOut) next.checkOut = 'Укажите дату выезда'
+    if (!checkIn) next.checkIn = 'Check-in date is required'
+    if (!checkOut) next.checkOut = 'Check-out date is required'
     if (checkIn && checkOut && checkIn >= checkOut) {
-      next.dates = 'Дата выезда должна быть позже заезда'
+      next.dates = 'Check-out must be after check-in'
     }
     const gc = Number(guestCount)
-    if (!guestCount || Number.isNaN(gc) || gc < 1) next.guestCount = 'Минимум 1 гость'
+    if (!guestCount || Number.isNaN(gc) || gc < 1) next.guestCount = 'At least 1 guest'
     setFieldErrors(next)
     return Object.keys(next).length === 0
   }
@@ -135,7 +135,7 @@ export default function RoomSearch() {
 
     const id = room.id ?? room.roomId
     if (id == null) {
-      setError('У номера нет id — проверьте ответ API')
+      setError('Room id is missing (check API response)')
       return
     }
 
@@ -147,7 +147,7 @@ export default function RoomSearch() {
         checkOut,
         guestCount: Number(guestCount),
       })
-      setNotice('Бронирование создано. Смотрите раздел «Мои брони».')
+      setNotice('Reservation created. See “My reservations”.')
     } catch (err) {
       setError(getApiErrorMessage(err))
     } finally {
@@ -157,7 +157,7 @@ export default function RoomSearch() {
 
   return (
     <section className="page-wide">
-      <h1>Поиск номеров</h1>
+      <h1>Room search</h1>
 
       <form className="search-form" onSubmit={onSearch}>
         {error ? (
@@ -173,17 +173,17 @@ export default function RoomSearch() {
 
         <div className="search-grid">
           <label className="field">
-            <span>Заезд</span>
+            <span>Check-in</span>
             <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} disabled={loading} />
             {fieldErrors.checkIn ? <small className="field-error">{fieldErrors.checkIn}</small> : null}
           </label>
           <label className="field">
-            <span>Выезд</span>
+            <span>Check-out</span>
             <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} disabled={loading} />
             {fieldErrors.checkOut ? <small className="field-error">{fieldErrors.checkOut}</small> : null}
           </label>
           <label className="field">
-            <span>Гости</span>
+            <span>Guests</span>
             <input
               type="number"
               min={1}
@@ -198,17 +198,17 @@ export default function RoomSearch() {
 
         <div className="search-grid filters">
           <label className="field">
-            <span>Город</span>
+            <span>City</span>
             <input
               type="text"
-              placeholder="любой"
+              placeholder="any"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               disabled={loading}
             />
           </label>
           <label className="field">
-            <span>Мин. рейтинг</span>
+            <span>Min rating</span>
             <input
               type="number"
               min={1}
@@ -227,7 +227,7 @@ export default function RoomSearch() {
               onChange={(e) => setOnlyParking(e.target.checked)}
               disabled={loading}
             />
-            <span>Только с парковкой</span>
+            <span>Parking only</span>
           </label>
           <label className="field checkbox-field">
             <input
@@ -236,33 +236,33 @@ export default function RoomSearch() {
               onChange={(e) => setOnlyWellness(e.target.checked)}
               disabled={loading}
             />
-            <span>Только с wellness</span>
+            <span>Wellness only</span>
           </label>
         </div>
 
         <button className="btn" type="submit" disabled={loading}>
-          {loading ? 'Поиск…' : 'Найти'}
+          {loading ? 'Searching…' : 'Search'}
         </button>
       </form>
 
-      {loading ? <Loading label="Ищем доступные номера…" /> : null}
+      {loading ? <Loading label="Searching available rooms…" /> : null}
 
       {searched ? (
         <div className="results-block">
-          <h2>Результаты</h2>
+          <h2>Results</h2>
           {rooms.length === 0 ? (
-            <p className="muted">Ничего не найдено. Измените даты или фильтры.</p>
+            <p className="muted">No results. Try changing dates or filters.</p>
           ) : (
             <div className="table-wrap">
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>Номер</th>
-                    <th>Город</th>
-                    <th>Рейтинг</th>
-                    <th>Парковка</th>
+                    <th>Room</th>
+                    <th>City</th>
+                    <th>Rating</th>
+                    <th>Parking</th>
                     <th>Wellness</th>
-                    <th>Цена / ночь</th>
+                    <th>Price / night</th>
                     <th />
                   </tr>
                 </thead>
@@ -286,11 +286,11 @@ export default function RoomSearch() {
                               disabled={bookingId != null || loading}
                               onClick={() => onBook(room)}
                             >
-                              {bookingId === id ? '…' : 'Забронировать'}
+                              {bookingId === id ? '…' : 'Reserve'}
                             </button>
                           ) : (
                             <Link className="inline-link" to="/login" state={{ from: location }}>
-                              Войти
+                              Sign in
                             </Link>
                           )}
                         </td>

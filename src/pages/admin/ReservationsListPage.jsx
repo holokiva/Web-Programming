@@ -43,7 +43,7 @@ export default function ReservationsListPage() {
 
   return (
     <section className="page-wide">
-      <h1>Бронирования</h1>
+      <h1>Reservations</h1>
       <p className="muted">GET /api/admin/reservations</p>
 
       {error ? (
@@ -53,21 +53,21 @@ export default function ReservationsListPage() {
       ) : null}
 
       {loading ? (
-        <Loading label="Загрузка списка…" />
+        <Loading label="Loading list…" />
       ) : items.length === 0 ? (
-        <p className="muted">Список пуст.</p>
+        <p className="muted">No reservations.</p>
       ) : (
         <div className="table-wrap">
           <table className="data-table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Пользователь</th>
-                <th>Номер</th>
-                <th>Заезд</th>
-                <th>Выезд</th>
-                <th>Гостей</th>
-                <th>Статус</th>
+                <th>User</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Guests</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>

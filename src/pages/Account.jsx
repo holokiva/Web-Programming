@@ -1,8 +1,8 @@
 export default function Account() {
   return (
     <section>
-      <h1>Личный кабинет</h1>
-      <p>Страница только для авторизованных пользователей.</p>
+      <h1>Account</h1>
+      <p>This page is available for signed-in users only.</p>
     </section>
   )
 }

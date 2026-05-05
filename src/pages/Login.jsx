@@ -16,15 +16,15 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
   const [apiError, setApiError] = useState(() =>
-    searchParams.get('reason') === 'session' ? 'Сессия истекла. Войдите снова.' : '',
+    searchParams.get('reason') === 'session' ? 'Session expired. Please sign in again.' : '',
   )
   const [loading, setLoading] = useState(false)
 
   const validate = () => {
     const next = {}
-    if (!email.trim()) next.email = 'Введите email'
-    else if (!emailRe.test(email.trim())) next.email = 'Некорректный email'
-    if (!password) next.password = 'Введите пароль'
+    if (!email.trim()) next.email = 'Email is required'
+    else if (!emailRe.test(email.trim())) next.email = 'Invalid email'
+    if (!password) next.password = 'Password is required'
     setFieldErrors(next)
     return Object.keys(next).length === 0
   }
@@ -42,7 +42,7 @@ export default function Login() {
       })
       const token = pickTokenFromAuthResponse(data)
       if (!token) {
-        setApiError('Сервер не вернул токен')
+        setApiError('Token was not returned by the server')
         return
       }
       const user = pickUserFromAuthResponse(data)
@@ -57,7 +57,7 @@ export default function Login() {
 
   return (
     <section>
-      <h1>Вход</h1>
+      <h1>Sign in</h1>
 
       <form className="form" onSubmit={onSubmit} noValidate>
         {apiError ? (
@@ -80,7 +80,7 @@ export default function Login() {
         </label>
 
         <label className="field">
-          <span>Пароль</span>
+          <span>Password</span>
           <input
             type="password"
             name="password"
@@ -93,7 +93,7 @@ export default function Login() {
         </label>
 
         <button className="btn" type="submit" disabled={loading}>
-          {loading ? 'Вход…' : 'Войти'}
+          {loading ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
     </section>

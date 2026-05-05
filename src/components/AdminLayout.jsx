@@ -5,15 +5,15 @@ const subNavClass = ({ isActive }) => (isActive ? 'admin-subnav-link active' : '
 export default function AdminLayout() {
   return (
     <div className="admin-layout">
-      <nav className="admin-subnav" aria-label="Админ-разделы">
+      <nav className="admin-subnav" aria-label="Admin sections">
         <NavLink to="/admin" end className={subNavClass}>
-          Дашборд
+          Dashboard
         </NavLink>
         <NavLink to="/admin/reservations" className={subNavClass}>
-          Бронирования
+          Reservations
         </NavLink>
         <NavLink to="/admin/locations" className={subNavClass}>
-          Локации
+          Locations
         </NavLink>
       </nav>
       <div className="admin-outlet">

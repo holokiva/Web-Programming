@@ -24,11 +24,11 @@ export default function Register() {
 
   const validate = () => {
     const next = {}
-    if (!email.trim()) next.email = 'Введите email'
-    else if (!emailRe.test(email.trim())) next.email = 'Некорректный email'
-    if (!password) next.password = 'Введите пароль'
-    else if (password.length < 6) next.password = 'Минимум 6 символов'
-    if (confirm !== password) next.confirm = 'Пароли не совпадают'
+    if (!email.trim()) next.email = 'Email is required'
+    else if (!emailRe.test(email.trim())) next.email = 'Invalid email'
+    if (!password) next.password = 'Password is required'
+    else if (password.length < 6) next.password = 'At least 6 characters'
+    if (confirm !== password) next.confirm = 'Passwords do not match'
     setFieldErrors(next)
     return Object.keys(next).length === 0
   }
@@ -52,7 +52,7 @@ export default function Register() {
         navigate('/')
         return
       }
-      setInfo('Регистрация прошла успешно. Теперь можно войти.')
+      setInfo('Registration successful. You can sign in now.')
     } catch (err) {
       setApiError(getApiErrorMessage(err))
     } finally {
@@ -62,7 +62,7 @@ export default function Register() {
 
   return (
     <section>
-      <h1>Регистрация</h1>
+      <h1>Sign up</h1>
 
       <form className="form" onSubmit={onSubmit} noValidate>
         {apiError ? (
@@ -73,7 +73,7 @@ export default function Register() {
         {info ? (
           <p className="alert alert-success" role="status">
             {info}{' '}
-            <Link to="/login">Перейти ко входу</Link>
+            <Link to="/login">Go to sign in</Link>
           </p>
         ) : null}
 
@@ -91,7 +91,7 @@ export default function Register() {
         </label>
 
         <label className="field">
-          <span>Пароль</span>
+          <span>Password</span>
           <input
             type="password"
             name="password"
@@ -104,7 +104,7 @@ export default function Register() {
         </label>
 
         <label className="field">
-          <span>Подтверждение пароля</span>
+          <span>Confirm password</span>
           <input
             type="password"
             name="confirm"
@@ -117,7 +117,7 @@ export default function Register() {
         </label>
 
         <button className="btn" type="submit" disabled={loading}>
-          {loading ? 'Отправка…' : 'Зарегистрироваться'}
+          {loading ? 'Submitting…' : 'Sign up'}
         </button>
       </form>
     </section>

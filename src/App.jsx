@@ -26,38 +26,38 @@ export default function App() {
       <header className="header">
         <nav className="nav">
           <NavLink to="/" end className={navLinkClass}>
-            Главная
+            Home
           </NavLink>
           <NavLink to="/search" className={navLinkClass}>
-            Поиск
+            Search
           </NavLink>
           <NavLink to="/about" className={navLinkClass}>
-            О нас
+            About
           </NavLink>
           {isAuthenticated ? (
             <>
               <NavLink to="/reservations" className={navLinkClass}>
-                Мои брони
+                My reservations
               </NavLink>
               <NavLink to="/account" className={navLinkClass}>
-                Кабинет
+                Account
               </NavLink>
               {isAdmin ? (
                 <NavLink to="/admin" className={navLinkClass}>
-                  Админ
+                  Admin
                 </NavLink>
               ) : null}
               <button type="button" className="nav-btn" onClick={logout}>
-                Выйти
+                Sign out
               </button>
             </>
           ) : (
             <>
               <NavLink to="/login" className={navLinkClass}>
-                Вход
+                Sign in
               </NavLink>
               <NavLink to="/register" className={navLinkClass}>
-                Регистрация
+                Sign up
               </NavLink>
             </>
           )}

@@ -35,8 +35,8 @@ export default function DashboardPage() {
 
   return (
     <section className="page-wide">
-      <h1>Дашборд</h1>
-      <p className="muted">Данные с GET /api/admin/dashboard</p>
+      <h1>Dashboard</h1>
+      <p className="muted">Data from GET /api/admin/dashboard</p>
 
       {error ? (
         <p className="alert alert-error" role="alert">
@@ -45,17 +45,17 @@ export default function DashboardPage() {
       ) : null}
 
       {loading ? (
-        <Loading label="Загрузка дашборда…" />
+        <Loading label="Loading dashboard…" />
       ) : data != null && typeof data === 'object' && !Array.isArray(data) ? (
         Object.keys(data).length === 0 ? (
-          <p className="muted">Пустой объект в ответе.</p>
+          <p className="muted">Empty response object.</p>
         ) : (
           <div className="table-wrap">
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>Показатель</th>
-                  <th>Значение</th>
+                  <th>Metric</th>
+                  <th>Value</th>
                 </tr>
               </thead>
               <tbody>
