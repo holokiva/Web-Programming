@@ -1,6 +1,55 @@
-# React + Vite
+# Paradise Hotel (frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React (Vite) фронтенд для системы бронирования Paradise Hotel.
+
+## Запуск
+
+1) Установить зависимости:
+
+```bash
+npm install
+```
+
+2) Настроить API URL.
+
+Скопируй `.env.example` → `.env` и укажи адрес бэкенда:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+3) Запустить dev-сервер:
+
+```bash
+npm run dev
+```
+
+Открой адрес из консоли (обычно `http://localhost:5173`).
+
+## Как пользоваться
+
+- **Поиск номеров**: `/search` — даты, гости, фильтры, результаты.
+- **Регистрация / вход**: `/register`, `/login`. Токен сохраняется в `localStorage`.
+- **Мои брони**: `/reservations` (только для авторизованных).
+- **Админка**: `/admin` (только для роли Admin в объекте `user`).
+
+## Примечания по API
+
+- Авторизация: `Authorization: Bearer <token>` берётся из `localStorage`.
+- Эндпоинты:
+  - `POST /api/auth/login`
+  - `POST /api/auth/register`
+  - `GET /api/rooms/availability`
+  - `POST /api/reservations`
+  - `GET /api/reservations/me`
+  - `DELETE /api/reservations/:id`
+  - `GET /api/admin/dashboard`
+  - `GET /api/admin/reservations`
+  - `CRUD /api/locations` (если у тебя другой путь, поменяй `BASE` в `src/services/locations.js`)
+
+---
+
+Ниже оставлен текст из шаблона Vite (можно удалить при желании).
 
 Currently, two official plugins are available:
 
