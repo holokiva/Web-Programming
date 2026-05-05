@@ -3,8 +3,11 @@ import ProtectedRoute from './components/ProtectedRoute.jsx'
 import { useAuth } from './context/AuthContext.jsx'
 import About from './pages/About.jsx'
 import Account from './pages/Account.jsx'
-import AdminDashboard from './pages/AdminDashboard.jsx'
+import AdminLayout from './components/AdminLayout.jsx'
+import DashboardPage from './pages/admin/DashboardPage.jsx'
 import Home from './pages/Home.jsx'
+import LocationsPage from './pages/admin/LocationsPage.jsx'
+import ReservationsListPage from './pages/admin/ReservationsListPage.jsx'
 import Login from './pages/Login.jsx'
 import MyReservations from './pages/MyReservations.jsx'
 import Register from './pages/Register.jsx'
@@ -88,10 +91,14 @@ export default function App() {
             path="/admin"
             element={
               <ProtectedRoute adminOnly>
-                <AdminDashboard />
+                <AdminLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<DashboardPage />} />
+            <Route path="reservations" element={<ReservationsListPage />} />
+            <Route path="locations" element={<LocationsPage />} />
+          </Route>
         </Routes>
       </main>
     </div>

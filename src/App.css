@@ -223,3 +223,75 @@
   color: #0d47a1;
   text-decoration: underline;
 }
+
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #d9d5cf;
+}
+
+.admin-subnav-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.admin-subnav-link:hover {
+  text-decoration: underline;
+}
+
+.admin-subnav-link.active {
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+.admin-outlet {
+  min-height: 12rem;
+}
+
+.admin-raw {
+  margin: 0;
+  padding: 1rem;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.locations-form {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #d9d5cf;
+  border-radius: 8px;
+  background: #faf9f7;
+  max-width: 36rem;
+}
+
+.form-section-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.btn-secondary {
+  border-color: #666;
+  background: #fff;
+  color: #333;
+}
