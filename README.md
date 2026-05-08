@@ -1,42 +1,42 @@
 # Paradise Hotel (frontend)
 
-React (Vite) фронтенд для системы бронирования Paradise Hotel.
+React (Vite) frontend for the Paradise Hotel booking system.
 
-## Запуск
+## Getting Started
 
-1) Установить зависимости:
+1) Install dependencies:
 
 ```bash
 npm install
 ```
 
-2) Настроить API URL.
+2) Configure the API URL.
 
-Скопируй `.env.example` → `.env` и укажи адрес бэкенда:
+Copy `.env.example` to `.env` and set the backend address:
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-3) Запустить dev-сервер:
+3) Start the dev server:
 
 ```bash
 npm run dev
 ```
 
-Открой адрес из консоли (обычно `http://localhost:5173`).
+Open the URL shown in the console (usually `http://localhost:5173`).
 
-## Как пользоваться
+## Usage
 
-- **Поиск номеров**: `/search` — даты, гости, фильтры, результаты.
-- **Регистрация / вход**: `/register`, `/login`. Токен сохраняется в `localStorage`.
-- **Мои брони**: `/reservations` (только для авторизованных).
-- **Админка**: `/admin` (только для роли Admin в объекте `user`).
+- **Room search**: `/search` — dates, guests, filters, and results.
+- **Register / login**: `/register`, `/login`. The token is stored in `localStorage`.
+- **My reservations**: `/reservations` (authorized users only).
+- **Admin panel**: `/admin` (only for users with the `Admin` role in the `user` object).
 
-## Примечания по API
+## API Notes
 
-- Авторизация: `Authorization: Bearer <token>` берётся из `localStorage`.
-- Эндпоинты:
+- Authorization: `Authorization: Bearer <token>` is read from `localStorage`.
+- Endpoints:
   - `POST /api/auth/login`
   - `POST /api/auth/register`
   - `GET /api/rooms/availability`
@@ -45,11 +45,11 @@ npm run dev
   - `DELETE /api/reservations/:id`
   - `GET /api/admin/dashboard`
   - `GET /api/admin/reservations`
-  - `CRUD /api/locations` (если у тебя другой путь, поменяй `BASE` в `src/services/locations.js`)
+  - `CRUD /api/locations` (if your path is different, update `BASE` in `src/services/locations.js`)
 
 ---
 
-Ниже оставлен текст из шаблона Vite (можно удалить при желании).
+The text below is from the default Vite template (you can remove it if you want).
 
 Currently, two official plugins are available:
 
